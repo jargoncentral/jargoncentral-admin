@@ -83,8 +83,9 @@ WSGI_APPLICATION = 'jargoncentral.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'NAME': 'jargoncentral',
+        'USER': 'jargoncentral',
+        'PASSWORD': 'jargoncentral',
         'HOST': 'db',
         'PORT': 5432,
     }

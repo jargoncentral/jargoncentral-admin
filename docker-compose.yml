@@ -8,10 +8,27 @@ services:
       - ./../shared-data/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_DB: jargoncentral
+      POSTGRES_USER: jargoncentral
+      POSTGRES_PASSWORD: jargoncentral
+
+  db-admin:
+    container_name: jargoncentral-pgadmin4
+    image: dpage/pgadmin4:3
+    ports:
+          - "8002:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "lakitharav@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    links:
+      - db
+
   web:
     container_name: jargoncentral-admin
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+#    command: python3 manage.py runserver 0.0.0.0:8000
+    command: bash -c "while ! nc -w 1 -z db 5432; do sleep 0.1; done; ./manage.py migrate; while :; do ./manage.py runserver 0.0.0.0:8000; sleep 1; done"
     volumes:
       - .:/code
       - ./../shared-data/logs:/code/logs

@@ -1,5 +1,9 @@
 FROM python:3
  ENV PYTHONUNBUFFERED 1
+ # Install some necessary things.
+ RUN apt-get update
+ RUN apt-get install -y swig libssl-dev dpkg-dev netcat
+
  RUN mkdir /code
  WORKDIR /code
  ADD requirements.txt /code/
