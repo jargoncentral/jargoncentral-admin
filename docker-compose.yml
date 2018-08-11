@@ -24,6 +24,13 @@ services:
     links:
       - db
 
+  msg-broker:
+    container_name: jargoncentral-msg-broker
+    image: rabbitmq:3.7.6-management
+    ports:
+          - "5672:5672"
+          - "15672:15672"
+
   web:
     container_name: jargoncentral-admin
     build: .
@@ -36,3 +43,4 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - msg-broker
